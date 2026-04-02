@@ -10,6 +10,7 @@ class AuthController extends Controller
     public function registerView()
     {
         try{
+            return view('auth.register');
 
         }
         catch(\Exception $e){
