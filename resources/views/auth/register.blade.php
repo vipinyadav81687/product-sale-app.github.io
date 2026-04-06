@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 @section('content')
 <div class="container">
+  
     <h1 class="mb-5 mt-2 text-center">Register</h1>
     <form>
 
