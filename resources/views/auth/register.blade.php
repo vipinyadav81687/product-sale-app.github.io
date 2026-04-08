@@ -104,7 +104,6 @@
                 $('#code').val('+'+phoneInput.getSelectedCountryData().dialCode);
             });
         });
-
     </script>  
 @endpush
 
