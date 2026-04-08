@@ -21,6 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'country_code',
+        'is_admin',
+        'phone_number',
+        'currency',
+        'is_verified'
     ];
 
     /**

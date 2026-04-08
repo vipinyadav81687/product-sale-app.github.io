@@ -313,6 +313,18 @@ legend {
   white-space: normal;
 }
 
+ /* custom css */
+.iti{
+  width:100%;
+}
+.error-message{
+  color:red;
+  font-size:15px;
+}
+
+
+/* custom css end */
+
 @media (max-width: 1200px) {
   legend {
     font-size: calc(1.275rem + 0.3vw) ;
