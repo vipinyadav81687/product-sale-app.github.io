@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use Illuminate\Support\Facades\Artisan;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,3 +28,9 @@ Route::get('/admin',function(){
 
 Route::get('/register',[AuthController::class,'registerView'])->name('registerView');
 Route::post('/register',[AuthController::class,'register'])->name('register');
+
+
+Route::get('/run', function () {
+    Artisan::call('migrate');
+    return "Done";
+});
