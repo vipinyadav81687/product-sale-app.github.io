@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
+use Mail;
 
 
 class AuthController extends Controller
@@ -34,6 +36,7 @@ class AuthController extends Controller
             $user->country_code = $request->code;
             $user->phone_number = $request->phone;
             $user->password = Hash::make($request->password);
+            $user->verification_token = Str::random(60);
             $user->save();
               
              return back()->with('success', 'Your Registration has been Successfully!');
