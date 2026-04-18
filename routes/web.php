@@ -32,8 +32,14 @@ Route::post('/register',[AuthController::class,'register'])->name('register');
 
 Route::get('/verify/{token}',[VerificationController::class,'verify'])->name('verify');
 
-Route::get('/run', function () {
-    Artisan::call('migrate');
-    return "Done";
-});
 
+Route::get('/login',[AuthController::class,'loginView'])->name('loginView');
+Route::post('/login',[AuthController::class,'login'])->name('login');
+
+Route::get('/dashboard', function () {
+    return 'User Dashboard';
+})->name('user.dashboard');
+
+Route::get('/admin/dashboard', function () {
+    return 'Admin Dashboard';
+})->name('admin.dashboard');

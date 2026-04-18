@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -50,15 +51,50 @@ class AuthController extends Controller
     {
        $verificationUrl =url('/verify/'.$user->verification_token);
        Mail::send('mails.verification', ['name' => $user->name, 'url' => $verificationUrl], function ($message) use ($user) {
-    $message->to($user->email);
-    $message->subject('Email Verification');
-});
+       $message->to($user->email);
+       $message->subject('Email Verification');
+      });
    
    
        }
 
+      public function loginView()
+    {
+        try{
+            return view('auth.login');
 
+        }
+        catch(\Exception $e){
+            return abort(404,"something went wrong!");
+        }
+    }
 
+     public function login(LoginRequest $request)
+    {
+        try{
 
+        $userCredentials = $request->only('email', 'password');
+
+        if (Auth::attempt($userCredentials)) {
+
+            if (Auth::user()->is_verified == 0) {
+                Auth::logout();
+                return back()->with('error', 'Please Verify your account!');
+            }
+
+            if (Auth::user()->is_admin == 1) {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('user.dashboard');
+            }
+
+        } else {
+            return back()->with('error', 'Username & Password is incorrect!');
+        } 
+           
+        }catch(\Exception $e){
+            return back()->with('error', $e->getMessage());
+        }
+    }
 
 }
