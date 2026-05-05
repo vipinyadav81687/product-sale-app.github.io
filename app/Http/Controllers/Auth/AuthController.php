@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -96,5 +97,54 @@ class AuthController extends Controller
             return back()->with('error', $e->getMessage());
         }
     }
+
+    public function forgetPasswordView()
+    {
+        try{
+            return view('auth.forget-password');
+
+        }
+        catch(\Exception $e){
+            return abort(404,"something went wrong!");
+        }
+    }
+
+    public function forgetPassword(Request $request)
+    {
+     try{
+      $user = User::where('email',$request->email)->first();
+
+        if(!$user){
+            return back()->with('error','Email is not Exists!');
+        }
+
+
+      $token = Str::random(40);
+      $url = url('/reser-passwor'.$token);
+
+
+      PasswordReset::updateOrInsert(
+      [
+       'email'=> $user->email
+      ],
+      [
+        'email' => $user->email,
+        'token' => $token,
+        'created_at' => Carbon::now()
+      ]
+    );
+
+      Mail::send('mails.forget-password',['url' => $url], function($message) use($user){
+        $message->to($user->email)->subject('Reset Password');
+      });
+        
+       return back()->with('success','Please check your mail and Password! ');
+
+     }catch(\Exception $e){
+        return back()->with('error', $e->getMessage());
+     }
+
+    }
+
 
 }

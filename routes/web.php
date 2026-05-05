@@ -36,6 +36,9 @@ Route::get('/verify/{token}',[VerificationController::class,'verify'])->name('ve
 Route::get('/login',[AuthController::class,'loginView'])->name('loginView');
 Route::post('/login',[AuthController::class,'login'])->name('login');
 
+Route::get('/forget-password',[AuthController::class,'forgetPasswordView'])->name('forgetPasswordView');
+Route::post('/forget-password',[AuthController::class,'forgetPassword'])->name('forgetPassword');
+
 Route::get('/dashboard', function () {
     return 'User Dashboard';
 })->name('user.dashboard');
