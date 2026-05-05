@@ -39,9 +39,14 @@ Route::post('/login',[AuthController::class,'login'])->name('login');
 Route::get('/forget-password',[AuthController::class,'forgetPasswordView'])->name('forgetPasswordView');
 Route::post('/forget-password',[AuthController::class,'forgetPassword'])->name('forgetPassword');
 
+Route::get('/reset-password/{token}',[AuthController::class,'resetPasswordView'])->name('resetPasswordView');
+Route::post('/reset-password',[AuthController::class,'resetPassword'])->name('resetPassword');
+Route::get('/password-updated',[AuthController::class,'PasswordUpdated'])->name('passwordUpdated');
+
+
 Route::get('/dashboard', function () {
     return 'User Dashboard';
-})->name('user.dashboard');
+})->name('user.dashboard'); 
 
 Route::get('/admin/dashboard', function () {
     return 'Admin Dashboard';

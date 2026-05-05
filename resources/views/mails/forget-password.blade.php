@@ -6,7 +6,7 @@
     <title>Reset Passsword</title>
 </head>
 <body>
-    <p> Click on below link Reset Yourr Password:</p>
+    <p> Click on below link Reset Your Password:</p>
     <a href="{{ $url}}">Click to Reset Password.</a>
 </body>
 </html>

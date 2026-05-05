@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\PasswordReset;
@@ -120,7 +121,7 @@ class AuthController extends Controller
 
 
       $token = Str::random(40);
-      $url = url('/reser-passwor'.$token);
+      $url = url('/reset-password/'.$token);
 
 
       PasswordReset::updateOrInsert(
@@ -147,4 +148,46 @@ class AuthController extends Controller
     }
 
 
+    public function resetPasswordView($token)
+    {
+        try{
+        $resetData = PasswordReset::where('token', $token)->first();
+           if(!$resetData){
+            return abort(404, "Something went wrong!");
+           }
+
+         $user =   User::where('email', $resetData->email)->first();
+            return view('auth.reset-password', compact('user'));
+
+        }
+        catch(\Exception $e){
+            return abort(404,"something went wrong!");
+        }
+    }
+
+
+
+    public function resetPassword(ResetPasswordRequest $request)
+    {
+        try{
+           $user = User::find($request->id);
+           $user->password = Hash::make($request->password);
+           $user->save();
+          
+           PasswordReset::where('email',$user->email)->delete();
+           return redirect()->route('passwordUpdated');
+
+        }catch(\Exception $e){
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function passwordUpdated()
+    {
+        try{
+            return view('auth.password-Updated');
+        }catch(\Exception $e){
+            return abort(404, "Something Went Wrong!");
+        }
+    }
 }
