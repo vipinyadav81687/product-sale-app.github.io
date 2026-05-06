@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
   
-    <h1 class="mb-5 mt-2 text-center">Login</h1>
+    <h1 class="mb-5 mt-2 text-center">Mail Verification</h1>
      @if(Session::has('success'))
      <div class="alert alert-success" role="alert">
      {{Session::get('success')}}
@@ -15,7 +15,7 @@
      @endif
 
 
-    <form method="POST" action="{{ route('login')}}">
+    <form method="POST" action="{{ route('mailVerification')}}">
       @csrf
   <div class="form-group">
     <label>Email address</label>
@@ -25,22 +25,10 @@
       {{ $message }}
      </span> 
   @enderror
-
-  </div>
- 
-  <div class="form-group">
-    <label>Password</label>
-    <input type="password" name="password" class="form-control" placeholder="Password" required>
-        @error('password')
-     <span class="error-message">
-      {{ $message }}
-  </span> 
-       @enderror
   </div>
   
-  <button type="submit" class="btn btn-primary">Login</button>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-<a href="{{ route('forgetPasswordView') }}">Forget Password</a> | <a href="{{ route('mailVerificationView') }}">Mail Verification</a>
 
 </div>
 @endsection

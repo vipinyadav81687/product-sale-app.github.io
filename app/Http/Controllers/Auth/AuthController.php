@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
@@ -190,4 +189,39 @@ class AuthController extends Controller
             return abort(404, "Something Went Wrong!");
         }
     }
+
+    public function mailVerificationView()
+    {
+        try{
+            return view('auth.mail-verification');
+        }catch(\Exception $e){
+            return abort(404, "Something Went Wrong!");
+        }
+    }
+
+    public function mailVerification(Request $request)
+    {
+        try{
+            $request->validate([
+                'email' => 'required|email|exists:users,email'
+            ]);
+          $isExists = User::where('email', $request->email)->first();
+
+          if(!$isExists){
+            return back()->with('error','Email not exists!' );
+          }
+
+            $user = User::find($isExists->id);
+            $user->verification_token = Str::random(60);
+            $user->token_expires_at  = Carbon::now()->addHour();
+            $user->save();   
+
+            $this->sendVerificationMail($user);
+            return back()->with('success', 'Verification Mail has been sent to your Mail!');
+
+        }catch(\Exception $e){
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
 }
