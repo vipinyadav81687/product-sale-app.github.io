@@ -15,17 +15,19 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Route::get('/',function(){
+//     return view('auth.login');
 // });
 
-Route::get('/',function(){
-    return view('auth.login');
-});
+// Route::get('/admin',function(){
+//     return view('admin.dashboard');
+// });
 
-Route::get('/admin',function(){
-    return view('admin.dashboard');
-});
+Route::group(['middleware' => ['isAuthenticated']], function(){
 
 Route::get('/register',[AuthController::class,'registerView'])->name('registerView');
 Route::post('/register',[AuthController::class,'register'])->name('register');
@@ -47,10 +49,18 @@ Route::get('/mail-verification',[AuthController::class,'mailVerificationView'])-
 Route::post('/mail-verification',[AuthController::class,'mailVerification'])->name('mailVerification');
 
 
+});
+
+Route::group(['middleware' => ['onlyAuthenticated']], function(){
+
 Route::get('/dashboard', function () {
     return 'User Dashboard';
 })->name('user.dashboard'); 
 
+});
+
+Route::group(['middleware' => ['onlyAuthenticated','onlyAdmin']], function(){
 Route::get('/admin/dashboard', function () {
     return 'Admin Dashboard';
 })->name('admin.dashboard');
+});
