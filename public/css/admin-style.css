@@ -445,7 +445,12 @@ pre {
 .pre-scrollable {
   max-height: 340px;
   overflow-y: scroll; }
-
+/* custom css start */
+.error-message{
+  font-size:15px;
+  color:red;
+}
+/* custom css end */
 .container {
   width: 100%;
   padding-right: 15px;

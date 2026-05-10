@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Admin\AppController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,7 +63,7 @@ Route::get('/dashboard', function () {
 });
 
 Route::group(['middleware' => ['onlyAuthenticated','onlyAdmin']], function(){
-Route::get('/admin/dashboard', function () {
-    return 'Admin Dashboard';
-})->name('admin.dashboard');
+Route::get('/admin/dashboard', [AppController::class,'index'])->name('admin.dashboard');
+Route::post('update-app-data', [AppController::class,'updateAppData'])->name('updateAppData');
+
 });
