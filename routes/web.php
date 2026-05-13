@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Admin\AppController;
+use App\Http\Controllers\MainController;
+
 
 
 /*
@@ -18,10 +20,10 @@ use App\Http\Controllers\Admin\AppController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/',[MainController::class,'index'])->name('index');
 // Route::get('/',function(){
 //     return view('auth.login');
 // });
