@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Admin\AppController;
+use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\MainController;
 
 
@@ -67,5 +68,9 @@ Route::get('/dashboard', function () {
 Route::group(['middleware' => ['onlyAuthenticated','onlyAdmin']], function(){
 Route::get('/admin/dashboard', [AppController::class,'index'])->name('admin.dashboard');
 Route::post('update-app-data', [AppController::class,'updateAppData'])->name('updateAppData');
+
+//menu route
+Route::get('admin/menus',[MenuController::class,'index'])->name('admin.menus');
+Route::post('app-menu-create',[MenuController::class,'store'])->name('admin.menu.store');
 
 });

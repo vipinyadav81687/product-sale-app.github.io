@@ -8,7 +8,7 @@
 					<h1><a href="index.html" class="logo">Project Name</a></h1>
 				<ul class="list-unstyled components mb-5">
 				  <li>
-					  <a href="#"><span class="fa fa-user mr-3"></span>Dashboard</a>
+					  <a href="{{ route('admin.menus') }}"><span class="fa fa-user mr-3"></span>Menus</a>
 				  </li>
 			
 				</ul>
