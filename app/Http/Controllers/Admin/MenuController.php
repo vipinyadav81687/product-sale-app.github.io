@@ -13,7 +13,8 @@ class MenuController extends Controller
     {
         try{
             $parentMenus = Menu::whereNull('parent_id')->get();
-            return view('admin.menus', compact('parentMenus'));
+            $menus = Menu::all();
+            return view('admin.menus', compact('parentMenus','menus'));
         }
         catch(\Exception $e){
             return abort(404, "Something went wrong!");
@@ -46,6 +47,23 @@ class MenuController extends Controller
             ]);
         }
     }
-
+  
+    public function destroy(Request $request){
+            
+        try{
+            Menu::where('id', $request->id)->delete();
+            return response()->json([
+                'success' => true,
+                'msg'=> 'Menu Deleted Sucessfully!'
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'success' => false,
+                'msg'=> $e->getMessage()
+            ]);
+        }
+    
+    }
     
 }
