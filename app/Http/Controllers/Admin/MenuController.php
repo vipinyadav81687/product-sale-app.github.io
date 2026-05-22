@@ -65,5 +65,30 @@ class MenuController extends Controller
         }
     
     }
+
+
+    public function update(Request $request)
+    {
+        try{
+            Menu::where('id',$request->id)->update([
+            'name' => $request->name,
+            'url'  => $request->url,
+            'is_external' => isset($request->is_external)?$request->is_external:0,
+            'position' => $request->position,
+            'parent_id' => $request->parent_id
+            ]);
+            
+            return response()->json([
+                'success' => true,
+                'msg'=> 'Menu Updated Sucessfully!'
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'success' => false,
+                'msg'=> $e->getMessage()
+            ]);
+        }
+    }
     
 }

@@ -73,5 +73,6 @@ Route::post('update-app-data', [AppController::class,'updateAppData'])->name('up
 Route::get('admin/menus',[MenuController::class,'index'])->name('admin.menus');
 Route::post('admin-menu-create',[MenuController::class,'store'])->name('admin.menu.store');
 Route::delete('admin-menu-destroy',[MenuController::class,'destroy'])->name('admin.menu.destroy');
+Route::put('admin-menu-update',[MenuController::class,'update'])->name('admin.menu.update');
 
 });
