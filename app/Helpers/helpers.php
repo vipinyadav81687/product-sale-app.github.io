@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\AppData;
+use App\Models\Menu;
+
 
 function getAppData($select)
 {
@@ -11,4 +13,16 @@ function getAppData($select)
         $sendData = $exists->$select;
      }
      return $sendData;
+
+}
+
+function getMenu($position)
+{
+   try{
+ $menus = Menu::where('position', $position)->whereNull('parent_id')->orderBy('id')->get();
+   return $menus;
+   }
+   catch(\Exception $e){
+      return [];
+   }
 }

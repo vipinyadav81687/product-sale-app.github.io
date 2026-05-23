@@ -37,8 +37,9 @@
     @endforeach
   </tbody>
 </table>
-
-
+<div class="d-flex justify-content-center">
+{{ $menus->links('pagination::bootstrap-4')}}
+</div>
 
 
 <!--Create Modal -->
