@@ -197,7 +197,7 @@
                 location.reload();
                }
             }
-        })
+        });
       });
 
 
@@ -223,7 +223,7 @@
                 location.reload();
                }
             }
-        })
+        });
       });
 
       //edit work

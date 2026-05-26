@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Admin\AppController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\MainController;
 
@@ -70,9 +71,14 @@ Route::get('/admin/dashboard', [AppController::class,'index'])->name('admin.dash
 Route::post('update-app-data', [AppController::class,'updateAppData'])->name('updateAppData');
 
 //menu route
-Route::get('admin/menus',[MenuController::class,'index'])->name('admin.menus');
-Route::post('admin-menu-create',[MenuController::class,'store'])->name('admin.menu.store');
-Route::delete('admin-menu-destroy',[MenuController::class,'destroy'])->name('admin.menu.destroy');
-Route::put('admin-menu-update',[MenuController::class,'update'])->name('admin.menu.update');
+Route::get('/admin/menus',[MenuController::class,'index'])->name('admin.menus');
+Route::post('/admin-menu-create',[MenuController::class,'store'])->name('admin.menu.store');
+Route::delete('/admin-menu-destroy',[MenuController::class,'destroy'])->name('admin.menu.destroy');
+Route::put('/admin-menu-update',[MenuController::class,'update'])->name('admin.menu.update');
+
+// categories route
+Route::get('/admin/categories',[CategoryController::class,'index'])->name('admin.categories');
+Route::post('/admin-category-create',[CategoryController::class,'store'])->name('admin.category.store');
+
 
 });
