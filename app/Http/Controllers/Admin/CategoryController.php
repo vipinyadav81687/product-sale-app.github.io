@@ -13,7 +13,8 @@ class CategoryController extends Controller
     {
         try{
          $categoies = Category::whereNull('parent_id')->get();
-          return view('admin.categories',compact('categoies'));
+        $allCategories = Category::with(relations: 'parent')->paginate(perPage: 5);
+          return view('admin.categories',data: compact(var_name: ['categoies','allCategories']));
         }
         catch(\Exception $e)
         {
@@ -46,6 +47,47 @@ class CategoryController extends Controller
             'success' => false,
             'msg' => $e->getMessage()
         ]);
+        }
+    }
+
+     public function destroy(Request $request)
+    {
+            
+        try{
+            Category::where('id', $request->id)->orWhere('parent_id', $request->id)->delete();
+            return response()->json([
+                'success' => true,
+                'msg'=> 'Category Deleted Sucessfully!'  
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'success' => false,
+                'msg'=> $e->getMessage()
+            ]);
+        }
+    
+    }
+
+
+    public function update(Request $request)
+    {
+        try{
+            Category::where('id',$request->id)->update([
+            'name' => $request->category_name,
+            'parent_id' => $request->parent_id
+            ]);
+            
+            return response()->json([
+                'success' => true,
+                'msg'=> 'Category Updated Sucessfully!'
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'success' => false,
+                'msg'=> $e->getMessage()
+            ]);
         }
     }
 }

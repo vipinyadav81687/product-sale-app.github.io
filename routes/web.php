@@ -79,6 +79,9 @@ Route::put('/admin-menu-update',[MenuController::class,'update'])->name('admin.m
 // categories route
 Route::get('/admin/categories',[CategoryController::class,'index'])->name('admin.categories');
 Route::post('/admin-category-create',[CategoryController::class,'store'])->name('admin.category.store');
+Route::delete('/admin-categories-destroy',[CategoryController::class,'destroy'])->name('admin.category.destroy');
+Route::put('/admin-category-update',[CategoryController::class,'update'])->name('admin.category.update');
+
 
 
 });

@@ -48,7 +48,8 @@ class MenuController extends Controller
         }
     }
   
-    public function destroy(Request $request){
+    public function destroy(Request $request)
+    {
             
         try{
             Menu::where('id', $request->id)->delete();

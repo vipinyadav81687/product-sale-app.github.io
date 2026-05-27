@@ -200,7 +200,8 @@
         });
       });
 
-
+      
+      //delete work
       $('.deleteBtn').click(function(){
         var id = $(this).data('id');
         $('#deleteMenuId').val(id);
