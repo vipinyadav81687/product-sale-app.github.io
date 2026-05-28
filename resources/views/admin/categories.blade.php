@@ -37,8 +37,7 @@
 <div class="d-flex justify-content-center">
 {{ $allCategories->links('pagination::bootstrap-4')}}
 </div>
-
-
+ 
 
 <!--Create Modal -->
 <div class="modal fade" id="createCategoryModal" tabindex="-1" role="dialog" aria-labelledby="createCategoryModalTitle" aria-hidden="true">

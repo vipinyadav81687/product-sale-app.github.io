@@ -2,6 +2,8 @@
 
 use App\Models\AppData;
 use App\Models\Menu;
+use App\Models\Category;
+
 
 
 function getAppData($select)
@@ -21,6 +23,17 @@ function getMenu($position)
    try{
  $menus = Menu::where('position', $position)->whereNull('parent_id')->orderBy('id')->get();
    return $menus;
+   }
+   catch(\Exception $e){
+      return [];
+   }
+}
+
+function getAllCategories()
+{
+   try{
+     $getAllCategories = Category::whereNull('parent_id')->with('children')->get();
+   return $getAllCategories;
    }
    catch(\Exception $e){
       return [];
