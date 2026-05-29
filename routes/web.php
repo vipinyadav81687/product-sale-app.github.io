@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Admin\AppController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\MainController;
@@ -81,6 +82,10 @@ Route::get('/admin/categories',[CategoryController::class,'index'])->name('admin
 Route::post('/admin-category-create',[CategoryController::class,'store'])->name('admin.category.store');
 Route::delete('/admin-categories-destroy',[CategoryController::class,'destroy'])->name('admin.category.destroy');
 Route::put('/admin-category-update',[CategoryController::class,'update'])->name('admin.category.update');
+
+// banners route
+Route::get('/admin/banners',[BannerController::class,'index'])->name('admin.banners');
+Route::post('/admin/banner-create',[BannerController::class,'store'])->name('admin.banner.store');
 
 
 
