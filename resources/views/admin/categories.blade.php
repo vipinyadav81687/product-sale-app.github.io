@@ -218,6 +218,17 @@
             }
         })
       });
+
+      // update work
+      $('.editBtn').click(function({
+        var data = $(this) data('obj');
+        $('#updateId').val(data.id);
+        $('#paragraph').val(data.paragraph);
+        $('#heading').val(data.heading);
+        $('#btn_text').val(data.btn_text);
+        $('#link').val(data.link);
+        $('#status').val(data.status);
+      }));
      
     });
 </script>

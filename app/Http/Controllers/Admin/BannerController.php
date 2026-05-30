@@ -25,7 +25,7 @@ class BannerController extends Controller
     {
         try{
          $request->validate([
-          'image' => 'required|mimes:jpg,png,jpeg,webp|max:5120',
+          'image' => 'required|image|mimes:jpg,png,jpeg,webp|max:20480',
           'heading' => 'required'
          ]);
              
@@ -60,6 +60,70 @@ class BannerController extends Controller
             'success' => false,
             'msg' => $e->getMessage()
         ]);
+        }
+    }
+
+     public function destroy(Request $request)
+    {
+            
+        try{
+            Banner::where('id', $request->id)->delete();
+            return response()->json([
+                'success' => true,
+                'msg'=> 'Banner Deleted Sucessfully!'  
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'success' => false,
+                'msg'=> $e->getMessage()
+            ]);
+        }
+    
+    }
+
+     public function update(Request $request)
+    {
+        try{
+
+         $request->validate([
+            'id' => 'required',
+          'image' => 'nullable|image|mimes:jpg,png,jpeg,webp|max:20480',
+          'heading' => 'required'
+         ]);
+
+           $data = [
+            'paragraph' => $request->paragraph,
+            'heading' => $request->heading,
+            'btn_text' => $request->btn_text,
+            'link' => $request->link,
+            'status' => $request->status
+           ];
+             
+         $fileName = '';
+         if($request->hasFile('image')){
+          $file = $request->file('image');
+         $fileName = time().'_'.$file->getClientOriginalName();
+         $destinationPath = public_path('uploads');
+         $file->move($destinationPath,$fileName);
+
+         $fileName = 'uploads/'.$fileName;
+         $data['image'] = $fileName;
+         }
+       
+
+         Banner::where('id', $request->id)->update($data);
+          
+            return response()->json([
+                'success' => true,
+                'msg'=> 'Banner Updated Sucessfully!'
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'success' => false,
+                'msg'=> $e->getMessage()
+            ]);
         }
     }
 }

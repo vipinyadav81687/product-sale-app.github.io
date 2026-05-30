@@ -86,6 +86,8 @@ Route::put('/admin-category-update',[CategoryController::class,'update'])->name(
 // banners route
 Route::get('/admin/banners',[BannerController::class,'index'])->name('admin.banners');
 Route::post('/admin/banner-create',[BannerController::class,'store'])->name('admin.banner.store');
+Route::delete('/admin-banner-destroy',[BannerController::class,'destroy'])->name('admin.banner.destroy');
+Route::put('/admin-banner-update',[BannerController::class,'update'])->name('admin.banner.update');
 
 
 
