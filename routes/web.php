@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AppController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\VariationController;
 use App\Http\Controllers\MainController;
 
 
@@ -85,10 +86,13 @@ Route::put('/admin-category-update',[CategoryController::class,'update'])->name(
 
 // banners route
 Route::get('/admin/banners',[BannerController::class,'index'])->name('admin.banners');
-Route::post('/admin/banner-create',[BannerController::class,'store'])->name('admin.banner.store');
+Route::post('/admin-banner-create',[BannerController::class,'store'])->name('admin.banner.store');
 Route::delete('/admin-banner-destroy',[BannerController::class,'destroy'])->name('admin.banner.destroy');
 Route::put('/admin-banner-update',[BannerController::class,'update'])->name('admin.banner.update');
 
+// variations & variation value
+Route::get('/admin/variations',[VariationController::class,'index'])->name('admin.variations');
+Route::post('/admin-variation-create',[VariationController::class,'store'])->name('admin.variation.store');
 
 
 });
