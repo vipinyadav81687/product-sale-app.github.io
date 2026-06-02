@@ -93,6 +93,8 @@ Route::put('/admin-banner-update',[BannerController::class,'update'])->name('adm
 // variations & variation value
 Route::get('/admin/variations',[VariationController::class,'index'])->name('admin.variations');
 Route::post('/admin-variation-create',[VariationController::class,'store'])->name('admin.variation.store');
+Route::post('/admin-variation-value-create',[VariationController::class,'variationValueStore'])->name('admin.variation.value.store');
+Route::delete('/admin-variation-value-destroy',[VariationController::class,'variationValueDestroy'])->name('admin.variation.value.destroy');
 
 
 });

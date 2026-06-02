@@ -5,7 +5,7 @@
 					  <span class="sr-only">Toggle Menu</span>
 					</button>
 				</div>
-					<h1><a href="index.html" class="logo">Project Name</a></h1>
+					<h1><a href="index.html" class="logo">{{ env('APP_NAME') }}</a></h1>
 				<ul class="list-unstyled components mb-5">
 				   <li>
 					  <a href="{{ route('admin.banners') }}"><span class="fa fa-picture-o mr-3"></span>Banners</a>
