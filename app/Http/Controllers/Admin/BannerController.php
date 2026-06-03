@@ -11,118 +11,110 @@ class BannerController extends Controller
     //
     public function index()
     {
-    try{
-        $banners = Banner::paginate(perPage: 5);
-          return view('admin.banners',data: compact(var_name: ['banners']));
-        }
-        catch(\Exception $e)
-        {
-          return abort(404, "Something went wrong!");  
+        try {
+            $banners = Banner::paginate(perPage: 5);
+            return view('admin.banners', data: compact(var_name: ['banners']));
+        } catch (\Exception $e) {
+            return abort(404, "Something went wrong!");
         }
     }
 
-     public function store(Request $request)
+    public function store(Request $request)
     {
-        try{
-         $request->validate([
-          'image' => 'required|image|mimes:jpg,png,jpeg,webp|max:20480',
-          'heading' => 'required'
-         ]);
-             
-         $fileName = '';
-         if($request->hasFile('image')){
-          $file = $request->file('image');
-         $fileName = time().'_'.$file->getClientOriginalName();
-         $destinationPath = public_path('uploads');
-         $file->move($destinationPath,$fileName);
+        try {
+            $request->validate([
+                'image' => 'required|image|mimes:jpg,png,jpeg,webp|max:20480',
+                'heading' => 'required'
+            ]);
 
-         $fileName = 'uploads/'.$fileName;
-         }
+            $fileName = '';
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $destinationPath = public_path('uploads');
+                $file->move($destinationPath, $fileName);
 
-         Banner::create([
-          'image' => $fileName ,
-          'paragraph' => $request->paragraph,
-          'heading' => $request->heading,
-          'btn_text'=> $request->btn_text,
-          'link' => $request->link,
-          'status' => $request->status
-         ]);
+                $fileName = 'uploads/' . $fileName;
+            }
 
-        return response()->json([
-            'success' => true,
-            'msg' => 'Banner Added Successfully!'
-        ]);
-      
-        }
-        catch(\Exception $e)
-        {
-         return response()->json([
-            'success' => false,
-            'msg' => $e->getMessage()
-        ]);
+            Banner::create([
+                'image' => $fileName,
+                'paragraph' => $request->paragraph,
+                'heading' => $request->heading,
+                'btn_text' => $request->btn_text,
+                'link' => $request->link,
+                'status' => $request->status
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Banner Added Successfully!'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'msg' => $e->getMessage()
+            ]);
         }
     }
 
-     public function destroy(Request $request)
+    public function destroy(Request $request)
     {
-            
-        try{
+
+        try {
             Banner::where('id', $request->id)->delete();
             return response()->json([
                 'success' => true,
-                'msg'=> 'Banner Deleted Sucessfully!'  
+                'msg' => 'Banner Deleted Sucessfully!'
             ]);
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'msg'=> $e->getMessage()
+                'msg' => $e->getMessage()
             ]);
         }
-    
     }
 
-     public function update(Request $request)
+    public function update(Request $request)
     {
-        try{
+        try {
 
-         $request->validate([
-            'id' => 'required',
-          'image' => 'nullable|image|mimes:jpg,png,jpeg,webp|max:20480',
-          'heading' => 'required'
-         ]);
+            $request->validate([
+                'id' => 'required',
+                'image' => 'nullable|image|mimes:jpg,png,jpeg,webp|max:20480',
+                'heading' => 'required'
+            ]);
 
-           $data = [
-            'paragraph' => $request->paragraph,
-            'heading' => $request->heading,
-            'btn_text' => $request->btn_text,
-            'link' => $request->link,
-            'status' => $request->status
-           ];
-             
-         $fileName = '';
-         if($request->hasFile('image')){
-          $file = $request->file('image');
-         $fileName = time().'_'.$file->getClientOriginalName();
-         $destinationPath = public_path('uploads');
-         $file->move($destinationPath,$fileName);
+            $data = [
+                'paragraph' => $request->paragraph,
+                'heading' => $request->heading,
+                'btn_text' => $request->btn_text,
+                'link' => $request->link,
+                'status' => $request->status
+            ];
 
-         $fileName = 'uploads/'.$fileName;
-         $data['image'] = $fileName;
-         }
-       
+            $fileName = '';
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $destinationPath = public_path('uploads');
+                $file->move($destinationPath, $fileName);
 
-         Banner::where('id', $request->id)->update($data);
-          
+                $fileName = 'uploads/' . $fileName;
+                $data['image'] = $fileName;
+            }
+
+
+            Banner::where('id', $request->id)->update($data);
+
             return response()->json([
                 'success' => true,
-                'msg'=> 'Banner Updated Sucessfully!'
+                'msg' => 'Banner Updated Sucessfully!'
             ]);
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'msg'=> $e->getMessage()
+                'msg' => $e->getMessage()
             ]);
         }
     }

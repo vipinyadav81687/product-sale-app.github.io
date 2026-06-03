@@ -95,6 +95,8 @@ Route::get('/admin/variations',[VariationController::class,'index'])->name('admi
 Route::post('/admin-variation-create',[VariationController::class,'store'])->name('admin.variation.store');
 Route::post('/admin-variation-value-create',[VariationController::class,'variationValueStore'])->name('admin.variation.value.store');
 Route::delete('/admin-variation-value-destroy',[VariationController::class,'variationValueDestroy'])->name('admin.variation.value.destroy');
-
+Route::put('/admin-variation-update',[VariationController::class,'update'])->name('admin.variation.update');
+Route::delete('/admin-variation-destroy',[VariationController::class,'destroy'])->name('admin.variation.destroy');
 
 });
+ 

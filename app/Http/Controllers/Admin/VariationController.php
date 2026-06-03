@@ -5,80 +5,78 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Variation;
 use App\Models\VariationValue;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 
 class VariationController extends Controller
 {
     //
-     public function index()
+    public function index()
     {
-        try{
+        try {
             $variations = Variation::with('values')->paginate(5);
             return view('admin.variation', compact('variations'));
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return abort(404, "Something went wrong!");
         }
     }
 
-     public function store(Request $request)
+    public function store(Request $request)
     {
-        try{
+        try {
 
             $request->validate([
-             'name' => 'required|unique:variations,name'
+                'name' => 'required|unique:variations,name'
             ]);
             Variation::create([
-               'name' => $request->name
+                'name' => $request->name
             ]);
             return response()->json([
                 'success' => true,
-                'msg'=> 'Variation Created Sucessfully!'
+                'msg' => 'Variation Created Sucessfully!'
             ]);
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'msg'=> $e->getMessage()
+                'msg' => $e->getMessage()
             ]);
         }
     }
 
-     public function variationValueStore(Request $request)
+    public function variationValueStore(Request $request)
     {
-        try{
+        try {
 
             $request->validate([
-             'variation_id' => 'required',
-             'value' => 'required'
+                'variation_id' => 'required',
+                'value' => 'required'
 
             ]);
 
-            $isExist = VariationValue::where('variation_id',$request->variation_id)
-            ->whereRaw('LOWER(value) = ?',[strtolower($request->value)])
-            ->first();
+            $isExist = VariationValue::where('variation_id', $request->variation_id)
+                ->whereRaw('LOWER(value) = ?', [strtolower($request->value)])
+                ->first();
 
-            if($isExist){
-            return response()->json([
-                'success' => false,
-                'msg'=> $request->value.' Variation Value already Created!'
+            if ($isExist) {
+                return response()->json([
+                    'success' => false,
+                    'msg' => $request->value . ' Variation Value already Created!'
+                ]);
+            }
+
+            VariationValue::create([
+                'variation_id' => $request->variation_id,
+                'value' => $request->value
             ]);
-           }
-
-           VariationValue::create([
-        'variation_id' => $request->variation_id,
-        'value' => $request->value
-           ]);
             return response()->json([
                 'success' => true,
-                'msg'=> 'Variation value Created Sucessfully!'
+                'msg' => 'Variation value Created Sucessfully!'
             ]);
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'msg'=> $e->getMessage()
+                'msg' => $e->getMessage()
             ]);
         }
     }
@@ -86,23 +84,74 @@ class VariationController extends Controller
 
     public function variationValueDestroy(Request $request)
     {
-        try{
+        try {
 
             $request->validate([
-             'id' => 'required'
+                'id' => 'required'
             ]);
 
-            VariationValue::where('id',$request->id)->delete();
+            VariationValue::where('id', $request->id)->delete();
 
             return response()->json([
                 'success' => true,
-                'msg'=> 'Variation Value Deleted Sucessfully!'
+                'msg' => 'Variation Value Deleted Sucessfully!'
             ]);
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'msg'=> $e->getMessage()
+                'msg' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        try {
+
+            $request->validate([
+                'id' => 'required',
+                'name' => [
+                    'required',
+                    Rule::unique('variations')->ignore($request->id)
+                ]
+            ]);
+
+            Variation::where('id', $request->id)
+                ->update([
+                    'name' => $request->name
+                ]);
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Variation Updated Sucessfully!'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'msg' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            Variation::where('id', $request->id)
+                ->delete();
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Variation Deleted Sucessfully!'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'msg' => $e->getMessage()
             ]);
         }
     }
