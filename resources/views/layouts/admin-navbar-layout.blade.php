@@ -19,6 +19,9 @@
         <li>
             <a href="{{ route('admin.variations') }}"><span class="fa fa-list-alt mr-3"></span>Variations</a>
         </li>
+        <li>
+            <a href="{{ route('admin.products') }}"><span class="fa fa-shopping-bag mr-3"></span>Products</a>
+        </li>
 
     </ul>
 

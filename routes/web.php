@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AppController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\VariationController;
 use App\Http\Controllers\MainController;
 
@@ -97,6 +98,9 @@ Route::post('/admin-variation-value-create',[VariationController::class,'variati
 Route::delete('/admin-variation-value-destroy',[VariationController::class,'variationValueDestroy'])->name('admin.variation.value.destroy');
 Route::put('/admin-variation-update',[VariationController::class,'update'])->name('admin.variation.update');
 Route::delete('/admin-variation-destroy',[VariationController::class,'destroy'])->name('admin.variation.destroy');
+
+//products
+Route::get('/admin/products',[ProductController::class,'index'])->name('admin.products');
 
 });
  

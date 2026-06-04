@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Select Dropdown</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width: 200px;
+        }
+
+        .dropdown-btn {
+            width: 100%;
+            padding: 10px;
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            z-index: 1;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        .dropdown-content label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .dropdown.open .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dropdown">
+    <div class="dropdown-btn" onclick="toggleDropdown()">Select Options</div>
+    <div class="dropdown-content">
+        <label><input type="checkbox" value="Option 1" onchange="updateSelected()"> Option 1</label>
+        <label><input type="checkbox" value="Option 2" onchange="updateSelected()"> Option 2</label>
+        <label><input type="checkbox" value="Option 3" onchange="updateSelected()"> Option 3</label>
+        <label><input type="checkbox" value="Option 4" onchange="updateSelected()"> Option 4</label>
+    </div>
+</div>
+
+<script>
+    function toggleDropdown() {
+        const dropdown = document.querySelector('.dropdown');
+        dropdown.classList.toggle('open');
+    }
+
+    function updateSelected() {
+        const checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
+        const selected = [];
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                selected.push(checkbox.value);
+            }
+        });
+        document.querySelector('.dropdown-btn').textContent = selected.length > 0 ? selected.join(', ') : 'Select Options';
+    }
+
+    // Close dropdown if clicked outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.querySelector('.dropdown');
+        if (!dropdown.contains(event.target)) {
+            dropdown.classList.remove('open');
+        }
+    });
+</script>
+
+</body>
+</html>
