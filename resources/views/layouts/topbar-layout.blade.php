@@ -55,7 +55,7 @@
         <div class="col-lg-3 d-none d-lg-block">
             <a href="" class="text-decoration-none">
                 <h1 class="m-0 display-5 font-weight-semi-bold"><span
-                        class="text-primary font-weight-bold border px-3 mr-1">{{ getAppData('logo_first_text') }}</span>{{ getAppData('logo_second_text') }}
+                     class="text-primary font-weight-bold border px-3 mr-1">{{ getAppData('logo_first_text') }}</span>{{ getAppData('logo_second_text') }}
                 </h1>
             </a>
         </div>
